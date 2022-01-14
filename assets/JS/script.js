@@ -1,8 +1,4 @@
 
-
-
-
-
 var cityInputEl = document.querySelector('#cityname');
 var searchBtnEl = document.querySelector('.btn');
 
@@ -19,7 +15,7 @@ for (var i = 0; i < localStorage.length; i++) {
 
     cityNameButton.append("<button>" + city + "</button>");
 }
-
+var keyCount = 0;
 
 function getCityWeather(event){
     event.preventDefault();
@@ -27,7 +23,7 @@ function getCityWeather(event){
         console.log(cityNameInput);
 
     
-        var queryUrlCurrent = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityNameInput + '&appid=' + apiKey;
+        var queryUrlCurrent = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityNameInput + '&appid=' + apiKey + '&units=metric';
 
         var requestFiveDaysUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityNameInput + '&appid=' + apiKey;
 
@@ -42,93 +38,35 @@ function getCityWeather(event){
             cityData = data;
             console.log(cityData);
             var cityName = $(".list-group").addClass("list-group-item");
-            cityName.append("<li>" + cityData.name + "</li>");
+            cityName.append("<button>" + cityData.name + "</button>");
 
+            var local = localStorage.setItem(keyCount, cityData.name);
+          
+            keyCount += 1;
+
+         //start current weather append
+        var currentWeatherCard =  $(".currentCard").append("<div>").addClass("card-body");
+        currentWeatherCard.empty();
+        var currentName = currentWeatherCard.append("<p>");
+        currentWeatherCard.append(currentName); 
+        
+        var unixFormat = moment.unix(cityData.dt).format("DD/MM/YYYY");
+        currentName.append(cityData.name + " " + unixFormat);
+        var weatherIcon = cityData.weather[0].icon;
+        currentName.append(`<img src="https://openweathermap.org/img/wn/${weatherIcon}@2x.png">`);
+
+        var currentTemp = currentName.append("<p>");
+        currentName.append(currentTemp);
+            currentTemp.append("<p>" + "Temperature: " + cityData.main.temp + " C" +"</p>");
+            // Add Humidity
+            currentTemp.append("<p>" + "Humidity: " + cityData.main.humidity + " %" + "</p>");
+            // // Add Wind Speed: 
+            currentTemp.append("<p>" + "Wind Speed: " + cityData.wind.speed + " KPH" + "</p>");
+
+        
         })
     }  
 };
 
 searchBtnEl.addEventListener("click" , getCityWeather);
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     var cityInputEl = $('#cityname');
-//     var searchBtnEl = $('.btn');
-
-//     var apiKey = "51fef5a92ee5ae575931b196ffbfb438";
-    
-
-
-// searchBtnEl.click(function() {
-// var cityInput = $('#cityname').val().trim();
-// console.log(cityInput);
-// var requestUrl = 'api.openweathermap.org/data/2.5/weather?q=' + cityInput + '&appid=' + apiKey;
-
-// if (cityInput == "") {
-//     console.log(cityInput);
-// } else {
-//     fetch(requestUrl)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       console.log(data)
-//     });
-// }
-
-
-
-// })
-
-
-// var cityData;
-// var cityWeather;
-
-// function getCityWeatherFromName(name){
-//     //construct request URL to get city coordinates from name
-//     var requestCityCoordinates = "http://api.openweathermap.org/data/2.5/weather?q="+name+"&appid=51fef5a92ee5ae575931b196ffbfb438";
-//     //call the server API to get city coordinates from name
-//     fetch(requestCityCoordinates)
-//     .then(function (response) {
-//     return response.json();
-//     })
-//     .then(function (data) {
-//     cityData = data;
-//     console.log(cityData);
-//     //get the weather data using coordinates obtained
-//     getCityWeather(cityData.coord.lat, cityData.coord.lon);
-//     });
-// }
-
-// function getCityWeather(lat, lon){
-    
-//         //construct request URL to get city weather info from coordinates
-//         var requestCityWeather = "https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&appid=51fef5a92ee5ae575931b196ffbfb438";    
-//         fetch(requestCityWeather)
-//         .then(function (response){
-//             return response.json();
-//         })
-//         .then(function(weather){
-//             cityWeather = weather;
-
-//             //****next should be calling a function to update the GUI with from cityWeather variable***//
-
-//         });
