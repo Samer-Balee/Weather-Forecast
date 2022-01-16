@@ -5,28 +5,18 @@ var searchBtnEl = document.querySelector('.btn');
 var apiKey = "51fef5a92ee5ae575931b196ffbfb438";
 var cityData;
 
-// var cityWeather;
-
-// Forloop for persisting the data onto HMTL page
-// for (var i = 0; i < localStorage.length; i++) {
-
-//     var city = localStorage.getItem(i);
-//     // console.log(localStorage.getItem("City"));
-//     var cityNameButton = $("#cities-buttons").addClass("list-group-item");
-
-//     cityNameButton.append("<button>" + city + "</button>");
-// }
 var keyCount = 0;
 
 function getCityWeather(event){
     event.preventDefault();
+
+
         var cityNameInput = document.querySelector('#cityname').value;
         console.log(cityNameInput);
 
     
         var queryUrlCurrent = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityNameInput + '&appid=' + apiKey + '&units=metric';
 
-        var requestFiveDaysUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityNameInput + '&appid=' + apiKey;
 
     if (cityNameInput == "") {
         console.log(cityNameInput)
@@ -73,9 +63,18 @@ function getCityWeather(event){
          .then(function(response){
             return response.json();
         }) .then(function(data){
-            var currentUV = currentTemp.append("<p>" + "UV Index: " + data.current.uvi + "</p>").addClass("card-text");
+            var currentUV = currentTemp.append("<p>" + "UV Index: " + "<span>" + data.current.uvi + "</span>" + "</p>").addClass("card-text");
             currentUV.addClass("UV");
             currentTemp.append(currentUV);
+            var uvIndex = data.current.uvi;
+            // console.log(uvIndex);
+            if (uvIndex >= 0 && uvIndex <= 4) {
+                $("span").css("background-color", "#74e7ad");
+            } else if (uvIndex > 4 && uvIndex <= 8) {
+                $("span").css("background-color", "#fff06d");
+            } else {
+                $("span").css("background-color", "#fd3939").css("color", "white"); 
+            };  
 
             var fiveDaysDiv = $(".fiveDayOne").addClass("card-text");
             fiveDaysDiv.empty();
@@ -99,7 +98,8 @@ function getCityWeather(event){
             })
         
         })
-    }  
+    } 
+    
 };
 
 searchBtnEl.addEventListener("click" , getCityWeather);
