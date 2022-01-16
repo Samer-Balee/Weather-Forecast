@@ -41,7 +41,7 @@ function getCityWeather(event){
             var cityName = $(".list-group").addClass("list-group-item");
             cityName.append("<button>" + cityData.name + "</button>");
 
-            var local = localStorage.setItem(keyCount, cityData.name);
+            // var local = localStorage.setItem(keyCount, cityData.name);
           
             keyCount += 1;
 
@@ -79,14 +79,24 @@ function getCityWeather(event){
 
             var fiveDaysDiv = $(".fiveDayOne").addClass("card-text");
             fiveDaysDiv.empty();
-           for (i = 1 ; i < 6 ; i ++) {
+
+            for (i = 1 ; i < 6 ; i ++) {
                
                var fiveDayDate = moment.unix(data.daily[i].dt).format("DD/MM/YYYY");
-               fiveDaysDiv.append("<div class=fiveDayColor>" + "<p>" + fiveDayDate + "</p>" + `<img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png">` + "<p>" + "Temperature: " + data.daily[i].temp.max + "</p>" + "<p>" + "Humidity: " + data.daily[i].humidity + "%" + "</p>" + "</div>");
-           } 
+               fiveDaysDiv.append("<div class=fiveDayColor>" + "<p>" + fiveDayDate + "</p>"
+
+                + `<img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png">`
+
+                + "<p>" + "Temperature: " + data.daily[i].temp.max + " c" + "</p>" + "<p>" + "Wind: "
+
+                 + data.daily[i].wind_speed + " Km/h" + "</p>" + "<p>" + "Humidity: " 
+
+                 + data.daily[i].humidity + " %" + "</p>" + "</div>");
+
+                } 
             
 
-        })
+            })
         
         })
     }  

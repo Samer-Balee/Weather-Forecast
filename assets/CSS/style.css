@@ -39,8 +39,14 @@
   
   p {
     font-size: 1.2rem;
+    color: black;
+    font-weight: bolder;
   }
 
+  .fiveDayColor {
+    border-top: 3px solid var(--dark);
+    background-color: var(--tertiary);
+  }
   .card-body h3 {
     font-size: 2rem;
   }
@@ -181,6 +187,7 @@
   
   .card-body {
     padding: 2.5%;
+    background-color: azure;
   }
   
   /* FORM */
@@ -191,7 +198,7 @@
   }
   
   .form-label {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     margin: 0 0 0 5px;
   }
   
