@@ -40,5 +40,7 @@ GitHub link : [Samer-Balee](https://github.com/Samer-Balee/Weather-Forecast).
 
 ## Usage
 
+* Weather page that shows current weather and five days forcast:
 
+    ![screenshot-weather](assets/images/screenshot-weather.PNG).
 
